@@ -17,6 +17,7 @@ export interface ICategoryList {
 
 export interface ICategoryImageList {
   result: ICategoryImage[],
+  selectedCategoryId: number | string | null,
   loading: boolean,
   loaded: boolean,
   error: null | unknown

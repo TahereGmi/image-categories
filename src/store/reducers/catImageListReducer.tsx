@@ -1,10 +1,11 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 import API from '../../helpers/API'
 import { ICategoryImageList } from '../../types/categories'
 
 const initialState: ICategoryImageList = {
   result: [],
+  selectedCategoryId: null,
   loading: false,
   loaded: false,
   error: null
@@ -12,16 +13,24 @@ const initialState: ICategoryImageList = {
 
 export const getCategoryImageList = createAsyncThunk(
   "categoryImage-list",
-  async (categoryId: string | number) => {
-    const res = await API.get(`/images/search?limit=10&category_ids=${categoryId}`);
-    return res;
+  async ({ categoryId, page }: { categoryId: string | number | null, page: number }, { getState }) => {
+    const rootState = getState() as RootState
+    const res = await API.get(`/images/search?limit=10&page=${page}&category_ids=${categoryId}`);
+    if(page > 0) {
+      return [...rootState.categoryImageList.result, ...res.data]
+    }
+    return res.data;
   }
 );
 
 export const categoryImageListSlice = createSlice({
   name: 'categoryImageList',
   initialState,
-  reducers: {},
+  reducers: {
+    getSelectedCategoryId: (state, action: PayloadAction<number | string | null>) => {
+      state.selectedCategoryId = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getCategoryImageList.pending, (state) => {
       state.loading = true
@@ -31,13 +40,14 @@ export const categoryImageListSlice = createSlice({
       state.error = action.error
     }),
     builder.addCase(getCategoryImageList.fulfilled, (state, action) => {
-      // state.result = [...state.result, ...action.payload.data]
-      state.result = action.payload.data
+      state.result = action.payload
       state.loaded = true
       state.loading = false
     })
   },
 })
+
+export const { getSelectedCategoryId } = categoryImageListSlice.actions
 
 export const selectedValue = (state: RootState) => state.categoryImageList
 

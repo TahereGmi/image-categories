@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { ICategoryImage, ICategoryImageList } from '../src/types/categories'
 import { useSelector, useDispatch } from 'react-redux'
 import { getCategoryImageList, selectedValue } from '../src/store/reducers/catImageListReducer'
@@ -5,14 +6,19 @@ import Sidebar from '../src/components/sidebar';
 import { AppDispatch } from '../src/store/store'
 
 const IndexPage = () => {
+  const page = useRef<number>(0)
   const dispatch = useDispatch<AppDispatch>()
   const categoryImageList = useSelector(selectedValue) as ICategoryImageList
-  const { loaded, loading, result: categoryImages } = categoryImageList
+  const { loaded, loading, result: categoryImages, selectedCategoryId } = categoryImageList
 
   const handleLoadMore = async () => {
-    const lastCategoryId = categoryImages[categoryImages.length - 1].id;
-    await dispatch(getCategoryImageList(lastCategoryId))
+    page.current += 1
+    await dispatch(getCategoryImageList({ categoryId: selectedCategoryId, page: page.current}))
   };
+
+  useEffect(() => {
+    page.current = 0
+  }, [selectedCategoryId])
 
   return (
     <div>

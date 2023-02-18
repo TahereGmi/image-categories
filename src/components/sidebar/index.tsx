@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { ICategory, ICategoryList } from '../../types/categories'
 import { getCategoryList, selectedValue } from '../../store/reducers/categoryListReducer'
-import { getCategoryImageList } from '../../store/reducers/catImageListReducer'
+import { getCategoryImageList, getSelectedCategoryId } from '../../store/reducers/catImageListReducer'
 import { AppDispatch } from '../../store/store'
 
 const IndexPage = () => {
@@ -15,14 +15,16 @@ const IndexPage = () => {
     (async () => {
       await dispatch(getCategoryList())
       if(loaded) {
-        await dispatch(getCategoryImageList(categories[0].id))
+        await dispatch(getCategoryImageList({ categoryId: categories[0].id, page: 0 }))
+        dispatch(getSelectedCategoryId(categories[0].id))
         setActiveCategoryIndex(categories[0].id)
       }
     })()
   }, [dispatch, loaded])
 
   const handleCategoryClick = async (categoryId: number | string) => {
-    await dispatch(getCategoryImageList(categoryId))
+    await dispatch(getCategoryImageList({ categoryId, page: 0 }))
+    dispatch(getSelectedCategoryId(categoryId))
     setActiveCategoryIndex(categoryId)
   };
 
