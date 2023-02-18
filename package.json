@@ -1,0 +1,29 @@
+{
+  "name": "image-categories",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Tahereh",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest app.test.js"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.9",
+    "@types/react-redux": "^7.1.25",
+    "axios": "^1.2.2",
+    "jest": "^29.3.1",
+    "next": "13.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "sass": "^1.58.0",
+    "standard-version": "^9.5.0",
+    "styled-components": "^5.3.6",
+    "typescript": "4.9.4"
+  }
+}
