@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import videoListReducer from './reducers/videoListReducer'
+import categoryListReducer from './reducers/categoryListReducer'
+import catImageListReducer from './reducers/catImageListReducer'
 
 export const store = configureStore({
   reducer: {
-    videoList: videoListReducer
+    categoryList: categoryListReducer,
+    categoryImageList: catImageListReducer
   },
 })
 
