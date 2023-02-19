@@ -1,17 +1,23 @@
 import styled from 'styled-components';
 
-const styles = {  
-imageList: styled.div`
+const styles = {
+  ImageListWrapper: styled.div`
+    width: 100%;
+    min-height: 100vh;
+    padding-left: 220px;
+  `,
+
+  ImageList: styled.div`
     display: flex;
     flex-wrap: wrap;
   `,
 
-  image: styled.img`
+  Image: styled.img`
     width: 25%;
     margin: 10px;
   `,
 
-  loadMoreButton: styled.button`
+  LoadMoreButton: styled.button`
     margin-top: 20px;
     padding: 10px;
     background-color: #4caf50;

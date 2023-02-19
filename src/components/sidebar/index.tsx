@@ -4,12 +4,15 @@ import { ICategory, ICategoryList } from '../../types/categories'
 import { getCategoryList, selectedValue } from '../../store/reducers/categoryListReducer'
 import { getCategoryImageList, getSelectedCategoryId } from '../../store/reducers/catImageListReducer'
 import { AppDispatch } from '../../store/store'
+import styles from './sidebar.style'
 
-const IndexPage = () => {
+const Sidebar = () => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState<number | string | null>(null)
   const dispatch = useDispatch<AppDispatch>()
   const categoryList = useSelector(selectedValue) as ICategoryList
   const { loaded, loading, result: categories } = categoryList
+
+  const { Sidebar, CategoryList } = styles
 
   useEffect(() => {
     (async () => {
@@ -29,26 +32,24 @@ const IndexPage = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h2>Categories:</h2>
-        {loading && <p>Loading...</p>}
-        {loaded &&
-          <ul>
-            {categories.map((category: ICategory) => (
-              <li
-                key={category.id}
-                className={`${activeCategoryIndex === category.id ? 'active' : ''}`}
-                onClick={() => handleCategoryClick(category.id)}
-              >
-                {category.name}
-              </li>
-            ))}
-          </ul>
-        }
-      </div>
-    </div>
+    <Sidebar>
+      <h2>Categories</h2>
+      {loading && <p>Loading...</p>}
+      {loaded &&
+        <CategoryList>
+          {categories.map((category: ICategory) => (
+            <li
+              key={category.id}
+              className={`${activeCategoryIndex === category.id ? 'active' : ''}`}
+              onClick={() => handleCategoryClick(category.id)}
+            >
+              {category.name}
+            </li>
+          ))}
+        </CategoryList>
+      }
+    </Sidebar>
   );
 };
 
-export default IndexPage;
+export default Sidebar;
