@@ -12,7 +12,7 @@ const IndexPage = () => {
   const categoryImageList = useSelector(selectedValue) as ICategoryImageList
   const { loaded, loading, result: categoryImages, selectedCategoryId } = categoryImageList
 
-  const { ImageList, ImageListWrapper } = styles
+  const { ImageList, ImageListWrapper, ImageWrap, Loading, LoadMoreButton } = styles
 
   const handleLoadMore = async () => {
     page.current += 1
@@ -27,19 +27,22 @@ const IndexPage = () => {
     <>
       <Sidebar />
       <ImageListWrapper>
-        <ImageList>
-          <h2>Select a category to show the images </h2>
-          {loading && <p>Loading...</p>}
+          {loading && <Loading>Loading...</Loading>}
           {loaded && categoryImages.length > 0 && 
             <>
-              {categoryImages.map((image: ICategoryImage) => (
-              <img key={image.id} src={image.url} alt="cat" />
-              ))}
-              <button onClick={() => handleLoadMore()}>Load More</button>
+              <ImageList>
+                {categoryImages.map((image: ICategoryImage) => (
+                  <ImageWrap>
+                    <img key={image.id} src={image.url} alt="cat" />
+                  </ImageWrap>
+                ))}
+              </ImageList>
+              <div>
+                <LoadMoreButton onClick={() => handleLoadMore()}>Load More</LoadMoreButton>
+              </div>
             </>
           }
           {loaded && categoryImages.length == 0 && <p>No result found!</p>}
-        </ImageList>
       </ImageListWrapper>
     </>
   );

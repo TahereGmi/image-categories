@@ -7,8 +7,13 @@ const styles = {
     background-color: #f1f1f1;
     padding: 20px;
     position: fixed;
+    top: 0;
+    left: 0;
   `,
-
+  SidebarTitle: styled.h1`
+    color: #333;
+    font-size: 18px;
+  `,
   CategoryList: styled.ul`
     list-style: none;
     padding: 0;
@@ -19,20 +24,11 @@ const styles = {
     li {
       text-transform: capitalize;
       cursor: pointer;
+      border-bottom: 1px solid #ddd;
       &.active {
         font-weight: bold;
         color: #2192ad;
       }
-    }
-  `,
-
-  CategoryItem: styled.li`
-    cursor: pointer;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-
-    &:hover {
-      background-color: #ddd;
     }
   `,
 
@@ -44,20 +40,6 @@ const styles = {
   Image: styled.img`
     width: 25%;
     margin: 10px;
-  `,
-
-  LoadMoreButton: styled.button`
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #3e8e41;
-    }
   `
 };
 

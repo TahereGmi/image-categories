@@ -12,7 +12,7 @@ const Sidebar = () => {
   const categoryList = useSelector(selectedValue) as ICategoryList
   const { loaded, loading, result: categories } = categoryList
 
-  const { Sidebar, CategoryList } = styles
+  const { Sidebar, CategoryList, SidebarTitle } = styles
 
   useEffect(() => {
     (async () => {
@@ -33,7 +33,7 @@ const Sidebar = () => {
 
   return (
     <Sidebar>
-      <h2>Categories</h2>
+      <SidebarTitle>Categories</SidebarTitle>
       {loading && <p>Loading...</p>}
       {loaded &&
         <CategoryList>
