@@ -6,6 +6,7 @@ import { ICategoryImageList } from '../../types/categories'
 const initialState: ICategoryImageList = {
   result: [],
   selectedCategoryId: null,
+  showMenu: false,
   loading: false,
   loaded: false,
   error: null
@@ -29,6 +30,9 @@ export const categoryImageListSlice = createSlice({
   reducers: {
     getSelectedCategoryId: (state, action: PayloadAction<number | string | null>) => {
       state.selectedCategoryId = action.payload
+    },
+    toggleShowMenu: (state, action: PayloadAction<boolean>) => {
+      state.showMenu = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -37,6 +41,7 @@ export const categoryImageListSlice = createSlice({
     }),
     builder.addCase(getCategoryImageList.rejected, (state, action) => {
       state.loading = false
+      state.loaded = false
       state.error = action.error
     }),
     builder.addCase(getCategoryImageList.fulfilled, (state, action) => {
@@ -47,7 +52,7 @@ export const categoryImageListSlice = createSlice({
   },
 })
 
-export const { getSelectedCategoryId } = categoryImageListSlice.actions
+export const { getSelectedCategoryId, toggleShowMenu } = categoryImageListSlice.actions
 
 export const selectedValue = (state: RootState) => state.categoryImageList
 

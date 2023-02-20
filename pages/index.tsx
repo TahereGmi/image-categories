@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { ICategoryImage, ICategoryImageList } from '../src/types/categories'
 import { useSelector, useDispatch } from 'react-redux'
-import { getCategoryImageList, selectedValue } from '../src/store/reducers/catImageListReducer'
+import { getCategoryImageList, toggleShowMenu, selectedValue } from '../src/store/reducers/catImageListReducer'
 import Sidebar from '../src/components/sidebar';
 import { AppDispatch } from '../src/store/store'
 import styles from '../src/styles/home.style';
@@ -10,9 +10,17 @@ const IndexPage = () => {
   const page = useRef<number>(0)
   const dispatch = useDispatch<AppDispatch>()
   const categoryImageList = useSelector(selectedValue) as ICategoryImageList
-  const { loaded, loading, result: categoryImages, selectedCategoryId } = categoryImageList
+  const { loaded, loading, result: categoryImages, selectedCategoryId, showMenu } = categoryImageList
 
-  const { ImageList, ImageListWrapper, ImageWrap, Loading, LoadMoreButton } = styles
+  const { 
+    ImageList, 
+    ImageListWrapper, 
+    ImageWrap, 
+    Loading, 
+    LoadMoreButton, 
+    LoadMoreBtnWrap, 
+    MenuIcon 
+  } = styles
 
   const handleLoadMore = async () => {
     page.current += 1
@@ -23,26 +31,39 @@ const IndexPage = () => {
     page.current = 0
   }, [selectedCategoryId])
 
+  const toggleMenu = () => {
+    dispatch(toggleShowMenu(!showMenu))
+  }
+
   return (
     <>
       <Sidebar />
       <ImageListWrapper>
-          {loading && <Loading>Loading...</Loading>}
-          {loaded && categoryImages.length > 0 && 
-            <>
-              <ImageList>
-                {categoryImages.map((image: ICategoryImage) => (
-                  <ImageWrap>
-                    <img key={image.id} src={image.url} alt="cat" />
-                  </ImageWrap>
-                ))}
-              </ImageList>
-              <div>
-                <LoadMoreButton onClick={() => handleLoadMore()}>Load More</LoadMoreButton>
-              </div>
-            </>
-          }
-          {loaded && categoryImages.length == 0 && <p>No result found!</p>}
+        <MenuIcon
+          className={`${showMenu ? 'open' : 'close'}`}
+          onClick={() => toggleMenu()}
+        >
+          <span />
+        </MenuIcon>
+        {loading && <Loading>Loading...</Loading>}
+        {loaded && categoryImages.length > 0 && 
+          <>
+            <ImageList>
+              {categoryImages.map((image: ICategoryImage) => (
+                <ImageWrap>
+                  <img key={image.id} src={image.url} alt="cat" />
+                </ImageWrap>
+              ))}
+            </ImageList>
+            <LoadMoreBtnWrap>
+              <LoadMoreButton 
+                onClick={() => handleLoadMore()}
+                disabled={loading}
+              >Load More</LoadMoreButton>
+            </LoadMoreBtnWrap>
+          </>
+        }
+        {loaded && categoryImages.length == 0 && <p>No result found!</p>}
       </ImageListWrapper>
     </>
   );

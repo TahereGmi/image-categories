@@ -9,6 +9,20 @@ const styles = {
     position: fixed;
     top: 0;
     left: 0;
+    transition: transform ease 500ms;
+
+    @media (min-width: 320px) and (max-width: 767px) {
+      width: 100%;
+      left: 0;
+      transform: translateY(-300px);
+      height: 300px;
+    }
+
+    &.open {
+      @media (min-width: 320px) and (max-width: 767px) {
+        transform: translateY(0px);
+      }
+    }
   `,
   SidebarTitle: styled.h1`
     color: #333;
