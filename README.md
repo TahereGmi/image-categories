@@ -1,4 +1,4 @@
-##Simple image gallery
+## Simple image gallery
 
 Using Nextjs + Typescript + Redux
 
