@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 import { ICategoryImage, ICategoryImageList } from '../src/types/categories'
 import { useSelector, useDispatch } from 'react-redux'
 import { getCategoryImageList, toggleShowMenu, selectedValue } from '../src/store/reducers/catImageListReducer'
-import Sidebar from '../src/components/sidebar';
+import Sidebar from '../src/components/sidebar'
 import { AppDispatch } from '../src/store/store'
-import styles from '../src/styles/home.style';
+import styles from '../src/styles/home.style'
 
 const IndexPage = () => {
   const page = useRef<number>(0)
@@ -25,7 +25,7 @@ const IndexPage = () => {
   const handleLoadMore = async () => {
     page.current += 1
     await dispatch(getCategoryImageList({ categoryId: selectedCategoryId, page: page.current}))
-  };
+  }
 
   useEffect(() => {
     page.current = 0
@@ -66,12 +66,7 @@ const IndexPage = () => {
         {loaded && categoryImages.length == 0 && <p>No result found!</p>}
       </ImageListWrapper>
     </>
-  );
-};
+  )
+}
 
-export default IndexPage;
-
-// TO DO:
-// Lazy loading
-// test 
-// design
+export default IndexPage

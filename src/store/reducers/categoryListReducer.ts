@@ -13,10 +13,10 @@ const initialState: ICategoryList = {
 export const getCategoryList = createAsyncThunk(
   "category-list",
   async () => {
-    const res = await API.get('/categories');
-    return res;
+    const res = await API.get('/categories')
+    return res
   }
-);
+)
 
 export const categoryListSlice = createSlice({
   name: 'categoryList',

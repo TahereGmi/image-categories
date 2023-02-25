@@ -52,7 +52,7 @@ const Sidebar = () => {
         </CategoryList>
       }
     </Sidebar>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
