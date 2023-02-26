@@ -1,6 +1,6 @@
 ## Simple image gallery
 
-Using Nextjs + Typescript + Redux
+Using Nextjs + Typescript + Redux + Styled components
 
 Run the development server:
 
